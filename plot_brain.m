@@ -1,13 +1,13 @@
 %% LOAD ELECTRODE DATA and SURFACE 
-%clearvars 
+clear
 tic
 
 % load MNI brain
 [vertices faces] = readObj('brain_LR.obj');
 S = load ('all_elec'); 
 S = struct2cell(S);
-allElecReal = S{1};
-iDD = allElecReal(:,1) ;
+allElec = S{1};
+iDD = allElec(:,1) ;
 
 disp('electrodes imported');
 
@@ -32,19 +32,16 @@ dist4elec = 12.5; %in mm
 
 tic
 clear eIds eIdist;
-fprintf('\n'); fprintf('Subject:      '); %check this later
 for subji = 1:length(iDD)
-    if (subji < 10) fprintf('\b\b\b'); elseif (subji < 100) fprintf('\b\b\b\b'); end
-    fprintf('%d %s', subji, ' '); 
     elec = iDD{subji};
     if ~isempty(elec)
-        D = pdist2(elec,vertices)';
-        t   = (D<dist4elec);
-        for vi = 1:length(vertices)
+        D = pdist2(elec,vertices)'; 
+        t   = (D<dist4elec); 
+        for vi = 1:length(vertices) %loop over all vertices of the model
            rowV = t(vi, :);
            rowVD = D(vi, :);
            idx = find(rowV);
-           eIds{vi} = idx; % for each vertex the id of influencing elec
+           eIds{vi} = idx; % for each vertex get the id of influencing elec
            s2check = rowVD(idx); 
            eIdist{vi} =  s2check;
         end
@@ -66,7 +63,7 @@ toc
 
 %% plot electrode electrodes
 
-v2p = 'l' %l or r
+v2p = 'l'; %l or r
 
 cols = jet(12);
 
@@ -80,17 +77,7 @@ pL.LineStyle = 'none';      % remove the lines
 alpha 0.2
 
 for subji = 1:length(iDD)
-    subji
     subjEle = iDD{subji};
-
-    %use this to flip electrodes from one hemisphere 
-%     for ei = 1:length(subjEle)
-%        if subjEle(ei,1) > 0 %if they are on left (or right) hemisphere change
-%            einverted  = subjEle(ei,1)*-1;
-%            subjEle(ei,1) = einverted;
-%        end
-%     end
-    
     for ei = 1:length(subjEle)
         [x, y, z] = sphere;
         mesh(x + subjEle(ei, 1), y +  subjEle(ei, 2) , z + subjEle(ei, 3), 'edgecolor', cols(subji,:));
@@ -110,7 +97,7 @@ else
 end
 
 %set(gca, 'CameraViewAngle', 3); %for orthographic positionnig. 
-l = light('Position',[-0.4 0.2 0.9],'Style','infinite')
+l = light('Position',[-0.4 0.2 0.9],'Style','infinite');
 material([.9 .3 .3]) %sets the ambient/diffuse/specular strength of the objects.
 
 
@@ -157,34 +144,20 @@ toc
 %% plot
 
 dat2plot        = 't'; %t or h
-v2p             = 'r' %l or r
-crange          = [1 7];%[-.3 .5];
-%crange         = [-10 10];
-cmp2use         = 'YlOrRd'%'YlOrRd';
+v2p             = 'r'; %l or r
+crange          = [1 10];%[-.3 .5];
 
 gaPow2plot      = eval (dat2plot); %h or t or sumA
 gaPatch = gaPow2plot; gaPatch(isnan(gaPow2plot)) = 0;  gaPatch(gaPatch ~= 0) = NaN;
-% subj = 13;
-% tmean_L = pow2Plot(subj,:);
-% tmean_LZP = cat (1, zero2Plot(subj,:),  zero2Plot(subj,:),  zero2Plot(subj,:));
-
-%tmean_L = gaPow2plot';  tmean_LZP = cat (1, gaPatch+.5, gaPatch+.5, gaPatch+.5)';
 tmean_L = gaPow2plot';  tmean_LZP = cat (1, gaPatch, gaPatch, gaPatch)';
 
 
 figure(2);
-%cindex = cat(1, tmean, tmean, tmean)';
-%cindex = ones(length(g.vertices), 3);
-%cindex(t1) = zeros(1,3);
 pL = patch('Faces',faces,'Vertices',vertices,'FaceVertexCData',tmean_L,'FaceColor','interp'); hold on;
 pL.LineStyle = 'none';      % remove the lines
 
-
-%lighting gouraud; %p.SpecularStrength = 0.4;%camlight
-
 pLZP = patch('Faces',faces,'Vertices',vertices,'FaceVertexCData',tmean_LZP,'FaceColor','interp');
 pLZP.LineStyle = 'none';      % remove the lines
-%pR = patch('Faces',gR.faces,'Vertices',gR.vertices,'FaceVertexCData',tmean_R','FaceColor','interp')
 
 caxis(crange)
 
@@ -197,28 +170,18 @@ if (strcmp (v2p, 'l'))
 else
 	view(90,0)     % right orientation
 end
-%set(gca, 'CameraViewAngle', 3); %for orthographic positionnig. 
-l = light('Position',[-0.4 0.2 0.9],'Style','infinite')
+
+l = light('Position',[-0.4 0.2 0.9],'Style','infinite');
 material([.9 .7 .3]) %sets the ambient/diffuse/specular strength of the objects.
 
 set(gca, 'FontSize', 20)
 
 axis equal off    % make the axes equal and invisible
-%axis vis3d off
-%axis manual
-%p.FaceAlpha = 0.9;   % make the object semi-transparent
-%pL.FaceColor = 'interp';    % set the face colors to be interpolated
-%p.FaceColor = 'none';    % turn off the colors
-
-%pR.LineStyle = 'none';      % remove the lines
 x1= pL.FaceVertexCData;
 finalColors = vals2colormap(x1, colorMap2use, crange);% NANs are converted to 1
 finalColors (isnan(x1),:) = NaN;
 
-%filename = ['_' dat2plot '_' num2str(f(1)) '-' num2str(f(end)) 'Hz.png'];
 
-filename = ['_t_contribution.jpg']
-export_fig(2, filename, '-r300', '-transparent');
 
 
 
