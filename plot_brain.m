@@ -28,7 +28,7 @@ end
 
 %% find electrode idx
 
-dist4elec = 12.5; %in mm
+dist2elec = 12.5; %in mm
 
 tic
 clear eIds eIdist;
@@ -36,7 +36,7 @@ for subji = 1:length(iDD)
     elec = iDD{subji};
     if ~isempty(elec)
         D = pdist2(elec,vertices)'; 
-        t   = (D<dist4elec); 
+        t   = (D<dist2elec); 
         for vi = 1:length(vertices) %loop over all vertices of the model
            rowV = t(vi, :);
            rowVD = D(vi, :);
