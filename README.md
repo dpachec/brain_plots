@@ -1,8 +1,8 @@
-# brain_plots
+# Readme
  
- Use plot_brains.m to load brain model in matlab and color it according to electrode count.
+Use plot_brains.m to load an MNI brain model in Matlab and color code it according to electrode coverage.
 
-Example electrodes are provided in the all_elec.mat file. Each entry in this cell is a subject, column 1 has MNI coordinates from all available electrodes and column 2 contains the labels. 
+Example electrodes are provided in the all_elec.mat file. Column 1 in this cell has MNI coordinates of all electrodes and column 2 contains labels. 
 
 Project also provides an example MNI brain in .obj format. 
 
