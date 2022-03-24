@@ -144,7 +144,7 @@ pLZP.LineStyle = 'none';      % remove the lines
 caxis(crange)
 
 
-colorMap2use = 'hot';
+colorMap2use = 'hot'; %
 colormap (colorMap2use); %winter works well (also try spring)
 colorbar;
 if (strcmp (v2p, 'l'))
