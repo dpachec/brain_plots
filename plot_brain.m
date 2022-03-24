@@ -21,7 +21,7 @@ for subji = 1:length(iDD)
            subjEle(ei,1) = einverted;
        end
     end
-    iDD{subji} = subjEle;
+    iDD{subji} = subjEle; 
 end
 
 
