@@ -158,7 +158,7 @@ material([.9 .7 .3]) %sets the ambient/diffuse/specular strength of the objects.
 
 set(gca, 'FontSize', 20)
 
-axis equal off    % make the axes equal and invisible
+axis equal off    
 x1= pL.FaceVertexCData;
 finalColors = vals2colormap(x1, colorMap2use, crange);% NANs are converted to 1
 finalColors (isnan(x1),:) = NaN;
