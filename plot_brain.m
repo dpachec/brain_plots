@@ -160,7 +160,7 @@ set(gca, 'FontSize', 20)
 
 axis equal off    
 x1= pL.FaceVertexCData;
-finalColors = vals2colormap(x1, colorMap2use, crange);% NANs are converted to 1
+finalColors = vals2colormap(x1, colorMap2use, crange);%
 finalColors (isnan(x1),:) = NaN;
 
 
