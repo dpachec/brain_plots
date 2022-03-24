@@ -1,6 +1,5 @@
-%% LOAD ELECTRODE DATA and SURFACE 
+%% LOAD ELECTRODE DATA and .OBJ SURFACE 
 clear
-tic
 
 % load MNI brain
 [vertices faces] = readObj('brain_LR.obj');
@@ -14,7 +13,7 @@ disp('electrodes imported');
 
 %% flip to use only 1 hemisphere (optional)
 
-for subji = 1:11
+for subji = 1:length(iDD)
     subjEle = iDD{subji};
     for ei = 1:length(subjEle)
        if subjEle(ei,1) > 0
@@ -35,7 +34,7 @@ clear eIds eIdist;
 for subji = 1:length(iDD)
     elec = iDD{subji};
     if ~isempty(elec)
-        D = pdist2(elec,vertices)'; 
+        D = pdist2(elec,vertices)'; % distance of each vertex to each electrode
         t   = (D<dist2elec); 
         for vi = 1:length(vertices) %loop over all vertices of the model
            rowV = t(vi, :);
@@ -45,7 +44,7 @@ for subji = 1:length(iDD)
            s2check = rowVD(idx); 
            eIdist{vi} =  s2check;
         end
-        eIds = eIds'; % for each vertex the id of influencing elec
+        eIds = eIds';
         eIdist = eIdist';
     else
         eIds = [];
@@ -61,11 +60,11 @@ end
 toc
 
 
-%% plot electrode electrodes
+%% plot electrodes
 
-v2p = 'l'; %l or r
+v2p = 'l'; %left or rigth
 
-cols = jet(12);
+cols2use = jet(12);
 
 
 figure();
@@ -80,12 +79,9 @@ for subji = 1:length(iDD)
     subjEle = iDD{subji};
     for ei = 1:length(subjEle)
         [x, y, z] = sphere;
-        mesh(x + subjEle(ei, 1), y +  subjEle(ei, 2) , z + subjEle(ei, 3), 'edgecolor', cols(subji,:));
-        
+        mesh(x + subjEle(ei, 1), y +  subjEle(ei, 2) , z + subjEle(ei, 3), 'edgecolor', cols2use(subji,:)); hold on; 
     end
-    
 end
-
 
 
 if (strcmp (v2p, 'l'))
@@ -96,29 +92,15 @@ else
     view(180,0)    
 end
 
-%set(gca, 'CameraViewAngle', 3); %for orthographic positionnig. 
 l = light('Position',[-0.4 0.2 0.9],'Style','infinite');
 material([.9 .3 .3]) %sets the ambient/diffuse/specular strength of the objects.
 
 
-axis equal off    % make the axes equal and invisible
-%axis vis3d off
-%axis manual
-%p.FaceAlpha = 0.9;   % make the object semi-transparent
-%pL.FaceColor = 'interp';    % set the face colors to be interpolated
-%p.FaceColor = 'none';    % turn off the colors
-
-%pR.LineStyle = 'none';      % remove the lines
-
-%export_fig(2, '_electrode_coverage_L.png', '-r300', '-transparent');
-%close all;
-
+axis equal off    
 
 %% count electrodes influencing each vertex
 
 tic
-minSubjects = 1;
-
 perc2Plot = zeros (length(allEids), length(vertices));
 clear elecinf
 for subji = 1:length(iDD)
@@ -144,15 +126,15 @@ toc
 %% plot
 
 dat2plot        = 't'; %t or h
-v2p             = 'r'; %l or r
-crange          = [1 10];%[-.3 .5];
+v2p             = 'l'; %l or r
+crange          = [1 15];%[-.3 .5];
 
 gaPow2plot      = eval (dat2plot); %h or t or sumA
 gaPatch = gaPow2plot; gaPatch(isnan(gaPow2plot)) = 0;  gaPatch(gaPatch ~= 0) = NaN;
 tmean_L = gaPow2plot';  tmean_LZP = cat (1, gaPatch, gaPatch, gaPatch)';
 
 
-figure(2);
+figure();
 pL = patch('Faces',faces,'Vertices',vertices,'FaceVertexCData',tmean_L,'FaceColor','interp'); hold on;
 pL.LineStyle = 'none';      % remove the lines
 
