@@ -1,9 +1,10 @@
 # Readme
  
-Use plot_brains.m to load an MNI brain model in Matlab and color code it according to electrode coverage.
+In this project, we will save freesurfer MNI models including all freesurfer regions into OBJ 
+These files are used in the mniBrain unity application 
+use convert_freesurfer_templates_to_obj to convert several freesurfer templates (requires fieldtrip)
 
-Example electrodes are provided in the all_elec cell (load all_elec.mat file). Column 1 has MNI coordinates and column 2 contains labels. 
 
-Project also provides an example MNI brain in .obj format. 
+
 
 
