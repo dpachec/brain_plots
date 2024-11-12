@@ -9,4 +9,9 @@ mesh2.faces = mesh.tri;
 
 %% 
 
-obj_write(mesh2, 'myObj')
+obj_write(mesh2, 'obj/myObj')
+
+
+%%
+
+atlas = ft_read_atlas([path subjID '/freesurfer/mri/aparc+aseg.mgz']);
