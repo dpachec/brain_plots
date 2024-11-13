@@ -10,26 +10,29 @@ cfg.roi        = {'ctx-lh-inferiortemporal'};
 cfg.atlas      = atlas; 
 mask_rha        = ft_volumelookup(cfg, atlas);
 
-
+%%
 
 seg             = keepfields(atlas, {'dim', 'unit','coordsys','transform'});
 seg.brain       = mask_rha;
 cfg             = [];
 cfg.method      = 'iso2mesh';
-cfg.radbound    = 2;
-cfg.maxsurf     = 0;
-cfg.tissue      = 'brain';
-cfg.numvertices = 50000; %number of vertices needs to be high for fs_average (highest resolution model)
-cfg.smooth      = 2;
+cfg.radbound    = 1; %smaller values = higher resolution % Check prepare_mesh_segmentation.m a scalar indicating the radius of the target surface mesh element bounding sphere
+cfg.maxsurf     = 1;
+cfg.numvertices = 100000; %number of vertices needs to be high for fs_average (highest resolution model)
+cfg.smooth      = 0;
 cfg.spmversion  = 'spm12';
-mesh_rha_average = ft_prepare_mesh(cfg, seg);
+mesh            = ft_prepare_mesh(cfg, seg);
 
 
 figure()
-ft_plot_mesh(mesh_rha_average,  'facealpha', .5);
+ft_plot_mesh(mesh,  'facealpha', .5);
 title('Average hippocampus + subject MNI');
 
 
+mesh2export = surfaceMesh(mesh.pos,mesh.tri);
 
 
-%%
+%% 
+
+writeSurfaceMesh(mesh2export, 'myM.obj')
+

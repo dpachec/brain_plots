@@ -9,9 +9,7 @@ mesh2.faces = mesh.tri;
 
 %% 
 
-obj_write(mesh2, 'obj/myObj')
+obj_write(mesh2, 'obj/full_brain/surface_pial_both')
 
 
 %%
-
-atlas = ft_read_atlas([path subjID '/freesurfer/mri/aparc+aseg.mgz']);
