@@ -1,10 +1,16 @@
 # Readme
 
-TheApplication to visualize electrodes and freesurfer average brain with desikan_killiany parcellation scheme
+This repository contains code to extract electrode locations in subject space, to convert them to MNI coordinates and plot them on an average brain template
+the vrMNI Application will visualize electrodes in MNI coordinates and freesurfer average brain with desikan_killiany parcellation scheme
+
+To extract electodes please follow the steps described in electrode_locations_pipeline_documentation.txt
+
+
+vrMNI
 The 3D models in the folder FreeSurfer_Models were extracted using the script extract_obj_from_FS_Parcellation.m
 based on the desikan_killiany parcellation scheme. 
 This was  done separately for each region (e.g., "ctx-lh-inferiortemporal")
-These files are included in the mniBrain application (to do: allow for flexible grouping into ROIs in the compiled application)
+These files are included in the vrMNI application (to do: allow for flexible grouping into ROIs in the compiled application)
 
 Alternatively, a full brain template (no subdivisions) can be taken from FreeSurfer (Matlab format) using the script extract_obj_from_FS_FullBrain
 
