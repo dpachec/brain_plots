@@ -3,7 +3,7 @@ Requirements:
 
 A folder with MRI scans s01_MRI.nii and s01_CT.nii
 
-1)	Perform ACPC transform on the MRI scans. This can be done using the stolk method, or the 3D slicer method. To do it with the 3D slicer method, use the code in create_fiducials_acpc.py to create the ACPC fiducials. Create a volume rendering of the MRI first (go to main drop out menu > volume rendering). Then locate them in their correspondent positions by dragging them in the 3D view and using the sliced views. Anterior comissure, posterior comissure and Interhemispherical point should be defined. Check video 2 of the stolk paper to see example. See images in the reference_images folders to see more examples- When ACPC fiducial positions are determined run the acpc_transformation.py script to perform the transformation (ctrl+G)
+1)	Perform ACPC transform on the MRI scans. This can be done using the stolk method, or the 3D slicer method. To do it with the 3D slicer method, use the code in create_fiducials_acpc.py to create the ACPC fiducials. Locate them in their correspondent positions by dragging fiducials in the 3D view and using the sliced views. Anterior comissure, posterior comissure and Interhemispherical point should be defined. Check video 2 of the stolk paper to see example. See images in the reference_images folders to see more examples- When ACPC fiducial positions are determined run the acpc_transformation.py script to perform the transformation (ctrl+G). The file needs to be saved in the format sXX_MR_acpc.nii (uncheck the compress box). Note that .nii and not .nii.gz should be used
 
 2)	Process ACPC transformed MRI with FreeSurfer. Use the script freesurfer_processing.m
 
