@@ -3,7 +3,7 @@
 clear, clc 
 globalPath = 'D:/Appartment/extract_electrodes/'; 
 
-subjID = 's01';
+subjID = 's03';
 
 %Import the anatomical CT
 ct = ft_read_mri([globalPath subjID '/' subjID '_CT.nii.gz']);
@@ -19,7 +19,7 @@ ct = ft_read_mri([globalPath subjID '/' subjID '_CT.nii.gz']);
 %% Align the anatomical CT to the CTF head surface coordinate system > normally this should be done, so no loop, let's test without
 cfg = [];
 cfg.method = 'interactive';
-cfg.coordsys = 'ctf'; % use acpc if not possible with ctf
+cfg.coordsys = 'ctf'; % IMPORTANT: use acpc if not possible with ctf (if the spm corregistration does not work)
 ct_ctf = ft_volumerealign(cfg, ct);
 
 %% Convert CTF to ACPC and write the anatomical CT in ACPC coordinates out to a file 
@@ -36,11 +36,11 @@ ft_volumewrite(cfg, ct_acpc);
 clear, clc
 
 globalPath = 'D:/Appartment/extract_electrodes/'; 
-%subjID = 's02'; 
 
 
-for subji = 1% [1:8 10:27] %subject 9 has 3 DICOM batches and is done in 3DSlicer
+for subji = 3 %subject 9 has 3 DICOM batches and is done in 3DSlicer
 
+    clearvars -except subji globalPath
     subjID = ['s' num2str(subji, '%02d')]; 
 
     %Import the FreeSurfer-processed MRI
@@ -60,19 +60,19 @@ for subji = 1% [1:8 10:27] %subject 9 has 3 DICOM batches and is done in 3DSlice
     cfg.viewresult = 'yes';
     ct_acpc_f = ft_volumerealign(cfg, ct_acpc, fsmri_acpc);
     
-    
+    allAxes = findall(0,'type','axes');
+    exportgraphics(allAxes(1), [subjID '_1.png'], 'Resolution',300);
+    exportgraphics(allAxes(2), [subjID '_2.png'], 'Resolution',300);
+    exportgraphics(allAxes(3), [subjID '_3.png'], 'Resolution',300); 
+    close all; 
     
     %%Write the MRI-fused anatomical CT out to a file 
-    tic 
-    
     cfg = [];
     cfg.filename = [globalPath subjID '/' subjID '_CT_acpc_f'];
     cfg.filetype = 'nifti';
     cfg.parameter = 'anatomy';
     ft_volumewrite(cfg, ct_acpc_f);
     
-    toc
-
     
 
 

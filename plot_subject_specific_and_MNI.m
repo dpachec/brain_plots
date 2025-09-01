@@ -5,8 +5,7 @@ clear
 mainPath = 'D:/Appartment/extract_electrodes/';
 
 %%
-subjID = 's09';
-cd ([mainPath subjID]);
+subjID = 's21';
 
 
 %% convert fiducias in acpc space to MNI using the affine transform
@@ -15,8 +14,8 @@ xfm = read_talxfm([mainPath subjID '/freesurfer/mri/transforms/talairach.xfm'])
 
 
 %% read fiducials
-fiducials = readtable('s09_fiducials.csv'); 
-elec_acpc = table2array(fiducials(:, 2:4))
+fiducials = readtable([mainPath subjID '/' subjID '_fiducials.csv']); 
+elec_acpc = table2array(fiducials(:, 2:4));
 
 %% apply transform
 
@@ -37,7 +36,7 @@ figure
 ft_plot_mesh(mesh, 'facealpha', .5); 
 ft_plot_sens(elec_mni_frv, 'elecsize', 20, 'facecolor', [1 0 0]);
 %ft_plot_sens(elec_acpc_f, 'elecsize', 100);
-view([-55 10]);
+view([-10 10]);
 material dull; 
 lighting gouraud; 
 camlight;
@@ -54,12 +53,13 @@ elec_acpc_frv.unit = 'mm';
 
 %% Visualize the cortical mesh of an individual subject 
 %%and examine their quality.
+figure
 pial_lh = ft_read_headshape([mainPath subjID '/freesurfer/surf/lh.pial.T1']);
 pial_lh.coordsys = 'acpc';
 ft_plot_mesh(pial_lh, 'facealpha', .5); 
-ft_plot_sens(elec_acpc_frv, 'elecsize', 30, 'facecolor', [1 0 0]);
+ft_plot_sens(elec_acpc_frv, 'elecsize', 20, 'facecolor', [1 0 0]);
 %ft_plot_sens(elec_acpc_f, 'elecsize', 100);
-view([-55 10]);
+view([-10 10]);
 material dull; 
 lighting gouraud; 
 camlight;
