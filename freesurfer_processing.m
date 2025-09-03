@@ -6,7 +6,7 @@ mainPath = '/Users/danielpacheco/Desktop/extract_electrodes/';
 
 
 fshome = '/Applications/freesurfer/7.3.2';
-for subji = [2:12 14:27]
+for subji = 28:35 
     
     subdir = [mainPath 's' num2str(subji, '%02d')];
     subjID = ['s' num2str(subji, '%02d')];
