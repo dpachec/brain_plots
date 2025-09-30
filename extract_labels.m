@@ -2,13 +2,13 @@
 %%
 clear, clc
 
-
-mainPath = 'D:/Appartment/extract_electrodes/';
+%mainPath = 'D:/Appartment/extract_electrodes/';
+mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
 
 
 %%
 
-subjID = 's21';
+subjID = 's29';
 elecCSV = readtable([mainPath subjID '/' subjID '_fiducials.csv']);
 elec.chanpos = table2array(elecCSV(:, 2:4));
 elec.label = table2cell(elecCSV(:, 1))
@@ -64,9 +64,10 @@ toc
 %% Extract labels from the individual brains, convert acpc coordinates to mni and export table 
 
 clear, clc
-mainPath = 'D:/Appartment/extract_electrodes/';
+%mainPath = 'D:/Appartment/extract_electrodes/';
+mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
 
-for subji = 9:9
+for subji = 29:29
 
     subjID = ['s' num2str(subji, '%02d')];
     elecCSV = readtable([mainPath subjID '/' subjID '_fiducials.csv']);

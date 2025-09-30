@@ -2,10 +2,12 @@
 %% First establish the main path
 
 clear
-mainPath = 'D:/Appartment/extract_electrodes/';
+%mainPath = 'D:/Appartment/extract_electrodes/';
+mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
+
 
 %%
-subjID = 's09';
+subjID = 's29';
 cd ([mainPath subjID]);
 
 
@@ -15,7 +17,7 @@ xfm = read_talxfm([mainPath subjID '/freesurfer/mri/transforms/talairach.xfm'])
 
 
 %% read fiducials
-fiducials = readtable('s09_fiducials.csv'); 
+fiducials = readtable('s29_fiducials.csv'); 
 elec_acpc = table2array(fiducials(:, 2:4))
 
 %% apply transform
