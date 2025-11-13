@@ -7,7 +7,7 @@ mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_in
 %mainPath = 'C:/Users/1764316/Desktop/electrode_location_remaining_subjects/'; 
 
 
-for subji = 35:35
+for subji = 33:33
 
     subjID = ['s' num2str(subji, '%02d')];
     elecCSV = readtable([mainPath subjID '/' subjID '_fiducials.csv']);

@@ -1,5 +1,5 @@
 
-%% Script to extract OBJ models from the FreeSurfer average brain based on the desikan_killiany parcellation (aparc+aseg.mgz)
+%% Script to extract OBJ models from the FreeSurfer average brain based on the desikan_killiany atlas (aparc+aseg.mgz)
 %%
 clear, clc
 %fsPath =  '/Applications/freesurfer/7.3.2/subjects/fsaverage/'; %original freesurfer path when FreeSurfer is installed (MAC)
