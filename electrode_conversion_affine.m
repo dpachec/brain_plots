@@ -3,12 +3,12 @@
 
 clear
 %mainPath = 'D:/Appartment/extract_electrodes/';
-%mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
-mainPath = 'C:/Users/1764316/Desktop/electrode_location_remaining_subjects/'; 
+mainPath = '/Users/danielpacheco/Documents/iEEG-Projects/Appartment/electrode_information/';
+%mainPath = 'C:/Users/1764316/Desktop/electrode_location_remaining_subjects/'; 
 
 
 %%
-subjID = 's30';
+subjID = 's28';
 cd ([mainPath subjID]);
 
 
@@ -35,7 +35,8 @@ elec_mni_frv.unit = 'mm';
 
 
 %% Visualize the cortical mesh extracted from the standard MNI brain along with the spatially normalized electrode
-load('D:/Documents/MATLAB/fieldtrip-master/template/anatomy/surface_pial_left.mat');
+%load('D:/Documents/MATLAB/fieldtrip-master/template/anatomy/surface_pial_left.mat');
+load('/Users/danielpacheco/Documents/MATLAB/fieldtrip-master/template/anatomy/surface_pial_right.mat');
 figure
 ft_plot_mesh(mesh, 'facealpha', .5); 
 ft_plot_sens(elec_mni_frv, 'elecsize', 20, 'facecolor', [1 0 0]);
@@ -57,7 +58,7 @@ elec_acpc_frv.unit = 'mm';
 
 %% Visualize the cortical mesh of an individual subject 
 %%and examine their quality.
-pial_lh = ft_read_headshape([mainPath subjID '/freesurfer/surf/lh.pial.T1']);
+pial_lh = ft_read_headshape([mainPath subjID '/freesurfer/surf/rh.pial.T1']);
 pial_lh.coordsys = 'acpc';
 ft_plot_mesh(pial_lh, 'facealpha', .5); 
 ft_plot_sens(elec_acpc_frv, 'elecsize', 30, 'facecolor', [1 0 0]);
