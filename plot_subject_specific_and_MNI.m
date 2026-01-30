@@ -6,7 +6,7 @@ clear
 mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
 
 %%
-subjID = 's15';
+subjID = 's03';
 
 
 %% convert fiducias in acpc space to MNI using the affine transform
@@ -97,17 +97,19 @@ atlas.coordsys = 'acpc';
 cfg            = [];
 cfg.inputcoord = 'acpc';
 cfg.atlas      = atlas;
-cfg.roi        = {'Right-Hippocampus'};
-mask_rha     = ft_volumelookup(cfg, atlas);
+cfg.roi        = {'ctx-lh-precuneus'}; 
+%mask_rha     = ft_volumelookup(cfg, atlas);
+%cfg.roi        = {'Left-Hippocampus'};
+mask_rha      = ft_volumelookup(cfg, atlas);
 
 seg = keepfields(atlas, {'dim', 'unit','coordsys','transform'});
-seg.brain       = mask_rha;
+seg.brain       = mask_rha1;
 cfg             = [];
 cfg.method      = 'iso2mesh';
 cfg.radbound    = 2;
 cfg.maxsurf     = 0;
 cfg.tissue      = 'brain';
-cfg.numvertices = 1000;
+cfg.numvertices = 10000;
 cfg.smooth      = 3;
 cfg.spmversion  = 'spm12';
 mesh_rha_subject = ft_prepare_mesh(cfg, seg);
@@ -122,7 +124,8 @@ ft_plot_sens(elec_mni_frv);
 title('Average hippocampus + subject MNI');
 %%
 figure(2)
-ft_plot_mesh(mesh_rha_subject,  'facealpha', .5);
+%ft_plot_mesh(mesh_rha_subject,  'facealpha', .5);
+ft_plot_mesh(mesh_rha_subject,  'facealpha', .5, 'facecolor', 'none', 'edgecolor', 'k');
 ft_plot_sens(elec_acpc_frv, 'label', 'on');
 title('Subject specific hippocampus');
 
