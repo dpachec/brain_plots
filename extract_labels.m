@@ -3,11 +3,11 @@
 
 clear, clc
 %mainPath = 'D:/Appartment/extract_electrodes/';
-mainPath = '/Users/danielpacheco/Documents/iEEG_projects/Appartment/electrode_information/';
+mainPath = '/Users/danielpacheco/Documents/iEEG-Projects/Appartment/electrode_information/';
 %mainPath = 'C:/Users/1764316/Desktop/electrode_location_remaining_subjects/'; 
 
 
-for subji = 33:33
+for subji = 34:34
 
     subjID = ['s' num2str(subji, '%02d')];
     elecCSV = readtable([mainPath subjID '/' subjID '_fiducials.csv']);
